@@ -4,7 +4,7 @@
 
 - Minecraft Endpoint: `minecraft.durgaaisolutions.in:25565`
 - Dashboard Endpoint: `https://minecraft.durgaaisolutions.in` (Password Protected)
-- File Browser Endpoint: `http://minecraft.durgaaisolutions.in:8080`
+- File Browser Endpoint: `http://minecraft.durgaaisolutions.in:8082`
 - File Browser Username: `i8o8i`
 - File Browser Password: `i8o8i`
 
@@ -16,7 +16,7 @@
 - Open Firewall Ports:
   - `25565/tcp`
   - `24454/udp`
-  - `8080/tcp`
+  - `8082/tcp`
   - `8123/tcp`
   - `4326/tcp`
   - `4327/tcp`

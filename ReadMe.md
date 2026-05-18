@@ -9,7 +9,7 @@
 | Minecraft (Purpur) | `25565` | Java Edition Gameplay |
 | Simple Voice Chat | `24454/udp` | In-Game Proximity Voice |
 | Dynmap Live Map | `8123` | Browser World Map |
-| File Browser | `8080` | Password-Protected Server File Manager |
+| File Browser | `8082` | Password-Protected Server File Manager |
 | Rcon Web Console | `4326` | Password-Protected Browser Rcon Terminal |
 | Auto Backup | - | 24-Hour Backups With 7-Day Retention |
 
@@ -73,7 +73,7 @@ PORT=25565
 ufw allow 25565/tcp
 ufw allow 24454/udp
 ufw allow 8123/tcp
-ufw allow 8080/tcp
+ufw allow 8082/tcp
 ufw allow 4326/tcp
 ufw allow 4327/tcp
 ```

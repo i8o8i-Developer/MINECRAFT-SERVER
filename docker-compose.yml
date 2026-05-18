@@ -74,9 +74,9 @@ services:
       PLUGINS: |
         https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
         https://download.luckperms.net/1609/bukkit/loader/LuckPerms-Bukkit-5.5.20.jar
-        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.22.0-dev+46-0fa6f70.jar
-        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.22.0-dev+46-0fa6f70.jar
-        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.22.0-dev+46-0fa6f70.jar
+        https://github.com/EssentialsX/Essentials/releases/download/2.21.2/EssentialsX-2.21.2.jar
+        https://github.com/EssentialsX/Essentials/releases/download/2.21.2/EssentialsXChat-2.21.2.jar
+        https://github.com/EssentialsX/Essentials/releases/download/2.21.2/EssentialsXSpawn-2.21.2.jar
         https://cdn.modrinth.com/data/9eGKb6K1/versions/ps3C3lpD/voicechat-bukkit-2.6.6.jar
         https://cdn.modrinth.com/data/P1OZGk5p/versions/sVahWBKF/ViaVersion-5.5.1.jar
         https://cdn.modrinth.com/data/NpvuJQoq/versions/Ex8pP0Ax/ViaBackwards-5.5.1.jar
@@ -85,8 +85,8 @@ services:
         https://cdn.modrinth.com/data/Lu3KuzdV/versions/anOhDobp/CoreProtect-CE-23.0.jar
         https://cdn.modrinth.com/data/1Ffl2uIq/versions/APiMrQgs/PvPManager.jar
         https://cdn.modrinth.com/data/fRQREgAc/versions/2025-latest/Dynmap-3.7-beta-3-spigot.jar
-        https://builds.enginehub.org/job/worldguard/last-successful/WorldGuard-7.0.13-dist.jar
-        https://builds.enginehub.org/job/worldedit/last-successful/WorldEdit-7.3.9-dist.jar
+        https://maven.enginehub.org/repo/com/sk89q/worldguard/worldguard-bukkit/7.0.12/worldguard-bukkit-7.0.12-dist.jar
+        https://hangar.papermc.io/EngineHub/WorldEdit/versions/latest/PAPER/download
         https://hangar.papermc.io/HangarMC/PlaceholderAPI/versions/latest/PAPER/download
         https://hangar.papermc.io/spark/spark/versions/latest/PAPER/download
 
@@ -149,7 +149,7 @@ services:
       - --password
       - 'i8o8i@#$CoreDSAnubhav'
     ports:
-      - "8080:80"
+      - "8082:80"
     environment:
       FB_NOAUTH: "false"
     volumes:
