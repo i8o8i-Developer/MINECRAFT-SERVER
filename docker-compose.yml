@@ -31,7 +31,7 @@ services:
       # -- Critical: Custom Paper Jar ---------------------------
       TYPE: "CUSTOM"
       CUSTOM_SERVER: "https://fill-data.papermc.io/v1/objects/830d4eb5c15cbd802a9ec9f2f54eaaaeb9511958339aec983fd0c88bad21d940/paper-26.1.2-64.jar"
-      VERSION: "${MINECRAFT_VERSION:-1.21.10}"
+      VERSION: "1.21.1"
       MODRINTH_PROJECTS: "spark,placeholderapi,worldedit"
       MODRINTH_LOADER: "paper"
 
