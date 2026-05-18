@@ -147,7 +147,7 @@ services:
       - --username
       - i8o8i
       - --password
-      - i8o8i
+      - 'i8o8i@#$CoreDSAnubhav'
     ports:
       - "8080:80"
     environment:
