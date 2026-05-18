@@ -20,7 +20,6 @@ services:
     ports:
       - "${PORT:-25565}:25565"          # Minecraft Java Edition
       - "24454:24454/udp"               # Simple Voice Chat (Udp)
-      - "8123:8123"                     # Dynmap Live Map
 
     environment:
       EULA: "true"
@@ -29,9 +28,11 @@ services:
       MOTD: "\\u00A76Server \\u00A7fBy \\u00A72Durgaai\\u00A7cSolutions"
       SERVER_NAME: "DurgaaiSolutions"
 
-      # -- Critical: Purpur Enables Plugins ---------------------
-      TYPE: "PURPUR"
+      # -- Critical: Custom Paper Jar ---------------------------
+      TYPE: "CUSTOM"
+      CUSTOM_SERVER: "https://fill-data.papermc.io/v1/objects/830d4eb5c15cbd802a9ec9f2f54eaaaeb9511958339aec983fd0c88bad21d940/paper-26.1.2-64.jar"
       VERSION: "${MINECRAFT_VERSION:-1.21.10}"
+      MODRINTH_PROJECTS: "spark,placeholderapi,worldedit"
 
       # -- Player Limits ----------------------------------------
       MAX_PLAYERS: "8"
@@ -85,11 +86,7 @@ services:
         https://cdn.modrinth.com/data/lO4tsixF/versions/zR0MWARk/DeathChest-1.0.6.jar
         https://cdn.modrinth.com/data/Lu3KuzdV/versions/anOhDobp/CoreProtect-CE-23.0.jar
         https://cdn.modrinth.com/data/1Ffl2uIq/versions/APiMrQgs/PvPManager.jar
-        https://cdn.modrinth.com/data/fRQREgAc/versions/2025-latest/Dynmap-3.7-beta-3-spigot.jar
         https://cdn.modrinth.com/data/DKY9btbd/versions/EZl3moba/worldguard-bukkit-7.0.16.jar?mr_download_reason=standalone
-        https://hangar.papermc.io/EngineHub/WorldEdit/versions/latest/PAPER/download
-        https://hangar.papermc.io/HangarMC/PlaceholderAPI/versions/latest/PAPER/download
-        https://hangar.papermc.io/spark/spark/versions/latest/PAPER/download
 
     volumes:
       - MinecraftData:/data

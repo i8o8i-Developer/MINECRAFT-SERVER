@@ -1,14 +1,13 @@
 # Durgaai Solutions Minecraft Server
 
-> Purpur 1.21.10 | 8 Players | Full Plugin Suite | Deployed Via Coolify And GitHub
+> Paper 1.21.10 | 8 Players | Full Plugin Suite | Deployed Via Coolify And GitHub
 
 ## Stack Overview
 
 | Service | Port | Purpose |
 | --- | --- | --- |
-| Minecraft (Purpur) | `25565` | Java Edition Gameplay |
+| Minecraft (Paper) | `25565` | Java Edition Gameplay |
 | Simple Voice Chat | `24454/udp` | In-Game Proximity Voice |
-| Dynmap Live Map | `8123` | Browser World Map |
 | File Browser | `8082` | Password-Protected Server File Manager |
 | Rcon Web Console | `4326` | Password-Protected Browser Rcon Terminal |
 | Auto Backup | - | 24-Hour Backups With 7-Day Retention |
@@ -22,7 +21,6 @@
 | EssentialsX Suite | Core Commands, Chat Formatting, Spawn Control |
 | SkinsRestorer | Player Skins In Online And Offline Mode |
 | Simple Voice Chat | In-Game Proximity Voice |
-| Dynmap | Live Browser Map |
 | ViaVersion And ViaBackwards | Cross-Version Client Compatibility |
 | WorldGuard And WorldEdit | Region Protection And Build Utilities |
 | CoreProtect CE | Grief Logging And Rollback |
@@ -72,7 +70,6 @@ PORT=25565
 ```bash
 ufw allow 25565/tcp
 ufw allow 24454/udp
-ufw allow 8123/tcp
 ufw allow 8082/tcp
 ufw allow 4326/tcp
 ufw allow 4327/tcp
