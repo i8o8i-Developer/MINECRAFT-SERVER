@@ -1,0 +1,15 @@
+# Real env file — NEVER commit this
+.env
+
+# Minecraft server data (huge, managed by Docker volumes)
+minecraft-data/
+filebrowser-data/
+filebrowser-config/
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp

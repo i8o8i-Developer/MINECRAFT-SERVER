@@ -1,0 +1,224 @@
+# ===============================================================
+#  Durgaai Solutions Minecraft Server Stack
+#  Git Hub -> Coolify -> Docker Compose Deployment
+#  Purpur 1.21.10 | 8 Players | Full Plugin Suite
+# ===============================================================
+
+services:
+
+  # =============================================================
+  #  Minecraft Server (Purpur - Required For Plugins)
+  # =============================================================
+  mc:
+    image: itzg/minecraft-server:latest
+    container_name: DurgaaiMinecraft
+    pull_policy: always
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+    ports:
+      - "${PORT:-25565}:25565"          # Minecraft Java Edition
+      - "24454:24454/udp"               # Simple Voice Chat (Udp)
+
+    environment:
+      EULA: "true"
+
+      # -- Server Identity --------------------------------------
+      MOTD: "\\u00A76Server \\u00A7fBy \\u00A72Durgaai\\u00A7cSolutions"
+      SERVER_NAME: "DurgaaiSolutions"
+
+      # -- Critical: Purpur Enables Plugins ---------------------
+      TYPE: "PURPUR"
+      VERSION: "${MINECRAFT_VERSION:-1.21.10}"
+
+      # -- Player Limits ----------------------------------------
+      MAX_PLAYERS: "8"
+      ONLINE_MODE: "${MINECRAFT_ONLINE_MODE:-true}"
+      PLAYER_IDLE_TIMEOUT: "0"
+
+      # -- Gameplay ---------------------------------------------
+      DIFFICULTY: "${MINECRAFT_DIFFICULTY:-normal}"
+      MODE: "${MINECRAFT_GAME_MODE:-survival}"
+      FORCE_GAMEMODE: "false"
+      HARDCORE: "false"
+      PVP: "true"
+      ALLOW_NETHER: "true"
+      GENERATE_STRUCTURES: "true"
+      ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
+      SPAWN_ANIMALS: "true"
+      SPAWN_MONSTERS: "true"
+      SPAWN_NPCS: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+
+      # -- World And Performance --------------------------------
+      MAX_WORLD_SIZE: "10000"
+      VIEW_DISTANCE: "10"
+      MAX_BUILD_HEIGHT: "256"
+      MAX_TICK_TIME: "60000"
+      SNOOPER_ENABLED: "false"
+
+      # -- Memory (8 Gb Ram) ------------------------------------
+      INIT_MEMORY: "${MINECRAFT_INIT_MEMORY:-8G}"
+      MAX_MEMORY: "${MINECRAFT_MAX_MEMORY:-8G}"
+      GUI: "false"
+      ENABLE_AUTOPAUSE: "false"
+
+      # -- Rcon -------------------------------------------------
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "${SERVICE_PASSWORD_RCON}"
+
+      # ---------------------------------------------------------
+      #  Auto Download Plugins
+      # ---------------------------------------------------------
+      PLUGINS: |
+        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
+        https://download.luckperms.net/1609/bukkit/loader/LuckPerms-Bukkit-5.5.20.jar
+        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.22.0-dev+46-0fa6f70.jar
+        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.22.0-dev+46-0fa6f70.jar
+        https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.22.0-dev+46-0fa6f70.jar
+        https://cdn.modrinth.com/data/9eGKb6K1/versions/ps3C3lpD/voicechat-bukkit-2.6.6.jar
+        https://cdn.modrinth.com/data/P1OZGk5p/versions/sVahWBKF/ViaVersion-5.5.1.jar
+        https://cdn.modrinth.com/data/NpvuJQoq/versions/Ex8pP0Ax/ViaBackwards-5.5.1.jar
+        https://github.com/SkinsRestorer/SkinsRestorer/releases/download/15.9.0/SkinsRestorer.jar
+        https://cdn.modrinth.com/data/lO4tsixF/versions/zR0MWARk/DeathChest-1.0.6.jar
+        https://cdn.modrinth.com/data/Lu3KuzdV/versions/anOhDobp/CoreProtect-CE-23.0.jar
+        https://cdn.modrinth.com/data/1Ffl2uIq/versions/APiMrQgs/PvPManager.jar
+        https://cdn.modrinth.com/data/fRQREgAc/versions/2025-latest/Dynmap-3.7-beta-3-spigot.jar
+        https://builds.enginehub.org/job/worldguard/last-successful/WorldGuard-7.0.13-dist.jar
+        https://builds.enginehub.org/job/worldedit/last-successful/WorldEdit-7.3.9-dist.jar
+        https://hangar.papermc.io/HangarMC/PlaceholderAPI/versions/latest/PAPER/download
+        https://hangar.papermc.io/spark/spark/versions/latest/PAPER/download
+
+    volumes:
+      - MinecraftData:/data
+
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/mc-monitor", "status", "--host", "localhost"]
+      interval: 20s
+      timeout: 15s
+      retries: 20
+      start_period: 120s
+
+    networks:
+      - MinecraftNetwork
+
+  # =============================================================
+  #  Rcon Web Console
+  # =============================================================
+  rcon:
+    image: itzg/rcon:latest
+    container_name: DurgaaiRcon
+    restart: unless-stopped
+    ports:
+      - "4326:4326"
+      - "4327:4327"
+    environment:
+      RWA_USERNAME: "${RCON_WEB_USER:-admin}"
+      RWA_PASSWORD: "${RCON_WEB_PASS}"
+      RWA_ADMIN: "true"
+      RWA_RCON_HOST: "mc"
+      RWA_RCON_PASSWORD: "${SERVICE_PASSWORD_RCON}"
+      RWA_WEBSOCKET_ADDR: ":4327"
+    depends_on:
+      mc:
+        condition: service_healthy
+    networks:
+      - MinecraftNetwork
+
+  # =============================================================
+  #  File Browser
+  # =============================================================
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: DurgaaiFiles
+    restart: unless-stopped
+    command:
+      - --root
+      - /srv/minecraft
+      - --database
+      - /database/filebrowser.db
+      - --config
+      - /config/settings.json
+      - --address
+      - 0.0.0.0
+      - --port
+      - "80"
+      - --username
+      - i8o8i
+      - --password
+      - i8o8i
+    ports:
+      - "8080:80"
+    environment:
+      FB_NOAUTH: "false"
+    volumes:
+      - MinecraftData:/srv/minecraft
+      - type: bind
+        source: ./FileBrowserData
+        target: /database
+      - type: bind
+        source: ./FileBrowserConfig
+        target: /config
+    networks:
+      - MinecraftNetwork
+
+  # =============================================================
+  #  Dynmap Reverse Proxy
+  # =============================================================
+  dynmap-proxy:
+    image: nginx:alpine
+    container_name: DurgaaiDynmap
+    restart: unless-stopped
+    ports:
+      - "8123:80"
+    volumes:
+      - type: bind
+        source: ./NginxDynmap.conf
+        target: /etc/nginx/conf.d/default.conf
+    depends_on:
+      - mc
+    networks:
+      - MinecraftNetwork
+
+  # =============================================================
+  #  Automated Backups
+  # =============================================================
+  backup:
+    image: itzg/mc-backup:latest
+    container_name: DurgaaiBackup
+    restart: unless-stopped
+    environment:
+      RCON_HOST: "mc"
+      RCON_PASSWORD: "${SERVICE_PASSWORD_RCON}"
+      BACKUP_INTERVAL: "24h"
+      PRUNE_BACKUPS_DAYS: "7"
+      INITIAL_DELAY: "5m"
+      PAUSE_IF_NO_PLAYERS: "true"
+      PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+      DEST_DIR: "/backups"
+      BACKUP_NAME: "DurgaaiWorld"
+    volumes:
+      - MinecraftData:/data:ro
+      - MinecraftBackups:/backups
+    depends_on:
+      mc:
+        condition: service_healthy
+    networks:
+      - MinecraftNetwork
+
+# ===============================================================
+#  Named Volumes
+# ===============================================================
+volumes:
+  MinecraftData:
+    driver: local
+  MinecraftBackups:
+    driver: local
+
+# ===============================================================
+#  Network
+# ===============================================================
+networks:
+  MinecraftNetwork:
+    driver: bridge
