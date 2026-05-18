@@ -20,6 +20,7 @@ services:
     ports:
       - "${PORT:-25565}:25565"          # Minecraft Java Edition
       - "24454:24454/udp"               # Simple Voice Chat (Udp)
+      - "8123:8123"                     # Dynmap Live Map
 
     environment:
       EULA: "true"
@@ -164,23 +165,6 @@ services:
     networks:
       - MinecraftNetwork
 
-  # =============================================================
-  #  Dynmap Reverse Proxy
-  # =============================================================
-  dynmap-proxy:
-    image: nginx:alpine
-    container_name: DurgaaiDynmap
-    restart: unless-stopped
-    ports:
-      - "8123:80"
-    volumes:
-      - type: bind
-        source: ./NginxDynmap.conf
-        target: /etc/nginx/conf.d/default.conf
-    depends_on:
-      - mc
-    networks:
-      - MinecraftNetwork
 
   # =============================================================
   #  Automated Backups

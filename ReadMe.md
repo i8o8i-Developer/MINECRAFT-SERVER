@@ -104,7 +104,6 @@ MINECRAFT-SERVER/
 |- env.example
 |- ReadMe.md
 |- HOSTING_GUIDE.md
-|- NginxDynmap.conf
 |- Dashboard/
 |  |- index.html
 |- FileBrowserData/
